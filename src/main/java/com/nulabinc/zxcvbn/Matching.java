@@ -3,7 +3,6 @@ package com.nulabinc.zxcvbn;
 import com.nulabinc.zxcvbn.matchers.Dictionary;
 import com.nulabinc.zxcvbn.matchers.Match;
 import com.nulabinc.zxcvbn.matchers.OmnibusMatcher;
-
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -12,7 +11,7 @@ import java.util.Map;
 
 public class Matching {
 
-    private static final Map<String, Map<String, Integer>> BASE_RANKED_DICTIONARIES = new HashMap<>();
+    private static final Map<String, Map<String, Integer>> BASE_RANKED_DICTIONARIES = new HashMap<String, Map<String, Integer>>();
     static {
         for (Map.Entry<String, String[]> frequencyListRef : Dictionary.FREQUENCY_LISTS.entrySet()) {
             String name = frequencyListRef.getKey();
@@ -33,9 +32,9 @@ public class Matching {
 
     protected Matching(Map<String, Map<String, Integer>> rankedDictionaries, List<String> orderedList) {
         if (rankedDictionaries != null) {
-            this.rankedDictionaries = new HashMap<>(rankedDictionaries);
+            this.rankedDictionaries = new HashMap<String, Map<String, Integer>>(rankedDictionaries);
         } else {
-            this.rankedDictionaries = new HashMap<>();
+            this.rankedDictionaries = new HashMap<String, Map<String, Integer>>();
         }
         Map<String, Integer> rankedUserInputs;
         if (orderedList != null && !orderedList.isEmpty()) {
@@ -51,7 +50,7 @@ public class Matching {
     }
 
     protected static Map<String, Integer> buildRankedDict(List<String> orderedList) {
-        HashMap<String, Integer> result = new HashMap<>();
+        HashMap<String, Integer> result = new HashMap<String, Integer>();
         int i = 1; // rank starts at 1, not 0
         for(String word: orderedList) {
             result.put(word, i);

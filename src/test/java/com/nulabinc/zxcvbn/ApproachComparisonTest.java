@@ -1,36 +1,32 @@
 package com.nulabinc.zxcvbn;
 
+import java.io.*;
+import java.net.URISyntaxException;
+import java.net.URL;
+import static java.nio.CharBuffer.wrap;
+import java.util.*;
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
+import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertNotNull;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
-import java.io.*;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.util.*;
-
-
-import static java.nio.CharBuffer.wrap;
-import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.assertNotNull;
-
 /**
  * These tests compare the output from different approaches for calculating password strength.
  *
- * The approaches include measuring String passwords with Java, measuring CharSequence passwords
- * in Java, and using the JavaScript version. The measure method with an empty list as the second
- * parameter is also compared.
- * All versions should produce the same results.
+ * The approaches include measuring String passwords with Java, measuring CharSequence passwords in Java, and using the
+ * JavaScript version. The measure method with an empty list as the second parameter is also compared. All versions
+ * should produce the same results.
  *
- * The list of password to do the comparisons with is loaded from passwords.txt in the test/resources
- * folder.
+ * The list of password to do the comparisons with is loaded from passwords.txt in the test/resources folder.
  */
 @RunWith(Parameterized.class)
-public class ApproachComparisonTest {
+public class ApproachComparisonTest
+{
 
     private static ScriptEngine engine;
 
@@ -41,7 +37,8 @@ public class ApproachComparisonTest {
     private Strength stringInputsStrength;
     private JavaScriptStrength jsStrength;
 
-    public ApproachComparisonTest(CharSequence password) {
+    public ApproachComparisonTest(CharSequence password)
+    {
         this.password = wrap(password);
 
         Zxcvbn zxcvbn = new Zxcvbn();
@@ -49,7 +46,8 @@ public class ApproachComparisonTest {
         calculateAndRecordStrengthUsingAllMethods(password, zxcvbn);
     }
 
-    private void calculateAndRecordStrengthUsingAllMethods(CharSequence password, Zxcvbn zxcvbn) {
+    private void calculateAndRecordStrengthUsingAllMethods(CharSequence password, Zxcvbn zxcvbn)
+    {
         charSequenceStrength = zxcvbn.measure(new WipeableString(password));
 
         stringStrength = zxcvbn.measure(password.toString());
@@ -60,9 +58,9 @@ public class ApproachComparisonTest {
     }
 
     //=================================================================================//
-
     @Test
-    public void keyValuesAreNotNull() {
+    public void keyValuesAreNotNull()
+    {
         assertNotNull(password);
         assertNotNull(stringStrength);
         assertNotNull(charSequenceStrength);
@@ -71,7 +69,8 @@ public class ApproachComparisonTest {
     }
 
     @Test
-    public void passwordStrengthMatchesStringStrength() {
+    public void passwordStrengthMatchesStringStrength()
+    {
         assertEquals(
                 stringStrength.getScore(),
                 charSequenceStrength.getScore()
@@ -79,7 +78,8 @@ public class ApproachComparisonTest {
     }
 
     @Test
-    public void passwordStrengthMatchesStringInputsStrength() {
+    public void passwordStrengthMatchesStringInputsStrength()
+    {
         assertEquals(
                 stringStrength.getScore(),
                 stringInputsStrength.getScore()
@@ -87,7 +87,8 @@ public class ApproachComparisonTest {
     }
 
     @Test
-    public void charsequenceAttackTimeMatchesStringAttackTime() {
+    public void charsequenceAttackTimeMatchesStringAttackTime()
+    {
         assertEquals(
                 stringStrength.getCrackTimesDisplay().getOfflineFastHashing1e10PerSecond(),
                 charSequenceStrength.getCrackTimesDisplay().getOfflineFastHashing1e10PerSecond()
@@ -95,7 +96,8 @@ public class ApproachComparisonTest {
     }
 
     @Test
-    public void charsequenceStrengthPasswordMatchesStringStrengthPassword() {
+    public void charsequenceStrengthPasswordMatchesStringStrengthPassword()
+    {
         assertEquals(
                 stringStrength.getPassword().toString(),
                 charSequenceStrength.getPassword().toString()
@@ -103,7 +105,8 @@ public class ApproachComparisonTest {
     }
 
     @Test
-    public void strengthPasswordMatchesInput() {
+    public void strengthPasswordMatchesInput()
+    {
         assertEquals(
                 password.toString(),
                 charSequenceStrength.getPassword().toString()
@@ -111,7 +114,8 @@ public class ApproachComparisonTest {
     }
 
     @Test
-    public void strengthScoreMatchesJavascript() {
+    public void strengthScoreMatchesJavascript()
+    {
         assertEquals(
                 jsStrength.getScore(),
                 charSequenceStrength.getScore()
@@ -119,7 +123,8 @@ public class ApproachComparisonTest {
     }
 
     @Test
-    public void strengthPasswordMatchesJavascript() {
+    public void strengthPasswordMatchesJavascript()
+    {
         assertEquals(
                 jsStrength.getPassword(),
                 charSequenceStrength.getPassword().toString()
@@ -127,7 +132,8 @@ public class ApproachComparisonTest {
     }
 
     @Test
-    public void charsequenceSuggestionsMatchStringSuggestions() {
+    public void charsequenceSuggestionsMatchStringSuggestions()
+    {
         assertStringListsAreEqual(
                 stringStrength.getFeedback().getSuggestions(),
                 charSequenceStrength.getFeedback().getSuggestions()
@@ -135,7 +141,8 @@ public class ApproachComparisonTest {
     }
 
     @Test
-    public void charsequenceGuessesMatchesStringGuesses() {
+    public void charsequenceGuessesMatchesStringGuesses()
+    {
         assertEquals(
                 stringStrength.getGuessesLog10(),
                 charSequenceStrength.getGuessesLog10(),
@@ -144,82 +151,123 @@ public class ApproachComparisonTest {
     }
 
     //=================================================================================//
-
     @Parameterized.Parameters(name = "{0}")
-    public static Iterable<Object[]> data() throws IOException  {
-        List<Object[]> passwords = new LinkedList<>();
-        passwords.add(new Object[]{""});
-        try (InputStream data = ApproachComparisonTest.class.getResourceAsStream("/passwords.txt")) {
+    public static Iterable<Object[]> data() throws IOException
+    {
+        List<Object[]> passwords = new LinkedList<Object[]>();
+        passwords.add(new Object[]
+        {
+            ""
+        });
+        InputStream data = ApproachComparisonTest.class.getResourceAsStream("/passwords.txt");
+        try
+        {
             BufferedReader in = new BufferedReader(new InputStreamReader(data));
             String line;
-            while ((line = in.readLine()) != null) {
-                if (line.trim().length() > 0) {
-                    passwords.add(new Object[]{line});
+            while ((line = in.readLine()) != null)
+            {
+                if (line.trim().length() > 0)
+                {
+                    passwords.add(new Object[]
+                    {
+                        line
+                    });
                 }
             }
+        }
+        finally
+        {
+            data.close();
         }
         return passwords;
     }
 
-    public void assertStringListsAreEqual(List<String> expectedStrings, List<String> actualStrings) {
+    public void assertStringListsAreEqual(List<String> expectedStrings, List<String> actualStrings)
+    {
         Collections.sort(expectedStrings);
         Collections.sort(actualStrings);
 
         assertEquals(expectedStrings.size(), actualStrings.size());
 
-        for (int n = 0; n < expectedStrings.size(); n++) {
+        for (int n = 0; n < expectedStrings.size(); n++)
+        {
             assertEquals(expectedStrings.get(n), actualStrings.get(n));
         }
     }
 
-    class JavaScriptStrength {
+    class JavaScriptStrength
+    {
+
         private final Map<String, Object> values;
 
-        public JavaScriptStrength(Map<String, Object> values) {
+        public JavaScriptStrength(Map<String, Object> values)
+        {
             this.values = values;
         }
 
-        public int getScore() {
+        public int getScore()
+        {
             Object score = values.get("score");
             // nashorn returns int, rhino returns double
-            if (score instanceof Double) {
+            if (score instanceof Double)
+            {
                 return ((Double) score).intValue();
-            } else {
-                return  (int) score;
+            }
+            else
+            {
+                return (int) score;
             }
         }
 
-        public String getPassword() {
-            return (String)values.get("password");
+        public String getPassword()
+        {
+            return (String) values.get("password");
         }
     }
 
     @SuppressWarnings("unchecked")
-    public JavaScriptStrength invokeJsVersion(CharSequence password) {
-        engine.put("pwd",password.toString());
-        try {
-            return new JavaScriptStrength(( Map<String, Object>) engine.eval("zxcvbn(pwd);"));
-        } catch (ScriptException e) {
-            System.err.println("Error invoking JavaScript version for password "+password);
+    public JavaScriptStrength invokeJsVersion(CharSequence password)
+    {
+        engine.put("pwd", password.toString());
+        try
+        {
+            return new JavaScriptStrength((Map<String, Object>) engine.eval("zxcvbn(pwd);"));
+        }
+        catch (ScriptException e)
+        {
+            System.err.println("Error invoking JavaScript version for password " + password);
             return null;
         }
     }
 
     @BeforeClass
-    public static void beforeClass() {
+    public static void beforeClass()
+    {
         engine = initScriptEngine();
     }
 
-    public static ScriptEngine initScriptEngine() {
+    public static ScriptEngine initScriptEngine()
+    {
         ScriptEngineManager manager = new ScriptEngineManager();
         ScriptEngine engine = manager.getEngineByName("JavaScript");
 
-        try {
+        try
+        {
             //using the 4.4.1 release
             URL script = JavaPortTest.class.getClassLoader().getResource("zxcvbn.js");
             engine.eval(new FileReader(new File(script.toURI())));
-        } catch (URISyntaxException | FileNotFoundException | ScriptException e) {
+        }
+        catch (URISyntaxException e)
+        {
             throw new RuntimeException("Cannot instantiate Javascript Engine", e);
+        }
+        catch (FileNotFoundException fnfe)
+        {
+            throw new RuntimeException("Cannot instantiate Javascript Engine", fnfe);
+        }
+        catch (ScriptException se)
+        {
+            throw new RuntimeException("Cannot instantiate Javascript Engine", se);
         }
 
         return engine;

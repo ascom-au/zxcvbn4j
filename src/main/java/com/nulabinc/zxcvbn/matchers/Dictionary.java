@@ -9,7 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Dictionary {
+public class Dictionary
+{
 
     private static final String RESOURCES_PACKAGE_PATH = "com/nulabinc/zxcvbn/matchers/dictionarys/";
 
@@ -19,38 +20,62 @@ public class Dictionary {
 
     private static final String UTF_8 = "UTF-8";
 
-
-    private static String buildResourcePath(String filename) {
+    private static String buildResourcePath(String filename)
+    {
         return RESOURCES_PACKAGE_PATH + filename + EXT;
     }
 
-    private static final String[] DICTIONARY_PARAMS = {
-            "us_tv_and_film",
-            "english_wikipedia",
-            "passwords",
-            "surnames",
-            "male_names",
-            "female_names"
+    private static final String[] DICTIONARY_PARAMS =
+    {
+        "us_tv_and_film",
+        "english_wikipedia",
+        "passwords",
+        "surnames",
+        "male_names",
+        "female_names"
     };
 
     public static final Map<String, String[]> FREQUENCY_LISTS;
-    static {
+
+    static
+    {
         FREQUENCY_LISTS = read();
     }
 
-    private static Map<String, String[]> read() {
-        Map<String, String[]> freqLists = new HashMap<>();
-        for (String filename:  DICTIONARY_PARAMS) {
-            List<String> words = new ArrayList<>();
-            try(InputStream is = RESOURCE_LOADER.getInputStream(buildResourcePath(filename));
-                // Reasons for not using StandardCharsets
-                // refs: https://github.com/nulab/zxcvbn4j/issues/62
-                BufferedReader br = new BufferedReader(new InputStreamReader(is, UTF_8))) {
-                String line;
-                while ((line = br.readLine()) != null) {
-                    words.add(line);
+    private static Map<String, String[]> read()
+    {
+        Map<String, String[]> freqLists = new HashMap<String, String[]>();
+        for (String filename : DICTIONARY_PARAMS)
+        {
+            List<String> words = new ArrayList<String>();
+            try
+            {
+                InputStream is = RESOURCE_LOADER.getInputStream(buildResourcePath(filename));
+                try
+                {
+                    // Reasons for not using StandardCharsets
+                    // refs: https://github.com/nulab/zxcvbn4j/issues/62
+                    BufferedReader br = new BufferedReader(new InputStreamReader(is, UTF_8));
+                    try
+                    {
+                        String line;
+                        while ((line = br.readLine()) != null)
+                        {
+                            words.add(line);
+                        }
+                    }
+                    finally
+                    {
+                        br.close();
+                    }
                 }
-            } catch (IOException e) {
+                finally
+                {
+                    is.close();
+                }
+            }
+            catch (IOException e)
+            {
                 throw new RuntimeException("Error while reading " + filename);
             }
             freqLists.put(filename, words.toArray(new String[]{}));

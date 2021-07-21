@@ -3,7 +3,6 @@ package com.nulabinc.zxcvbn;
 import com.nulabinc.zxcvbn.guesses.*;
 import com.nulabinc.zxcvbn.matchers.Match;
 import com.nulabinc.zxcvbn.matchers.MatchFactory;
-
 import java.util.*;
 
 public class Scoring {
@@ -22,7 +21,7 @@ public class Scoring {
 
     public static Strength mostGuessableMatchSequence(CharSequence password, List<Match> matches, boolean excludeAdditive) {
         final int n = password.length();
-        final List<List<Match>> matchesByJ = new ArrayList<>();
+        final List<List<Match>> matchesByJ = new ArrayList<List<Match>>();
         for (int i = 0; i < n; i++) {
             matchesByJ.add(new ArrayList<Match>());
         }
@@ -113,7 +112,7 @@ public class Scoring {
     }
 
     private static List<Match> unwind(int n, Optimal optimal) {
-        List<Match> optimalMatchSequence = new ArrayList<>();
+        List<Match> optimalMatchSequence = new ArrayList<Match>();
         int k = n - 1;
         if (0 <= k) {
             Integer l = null;
@@ -147,11 +146,11 @@ public class Scoring {
 
     private static class Optimal {
 
-        public final List<Map<Integer, Match>> m = new ArrayList<>();
+        public final List<Map<Integer, Match>> m = new ArrayList<Map<Integer, Match>>();
 
-        public final List<Map<Integer, Double>> pi = new ArrayList<>();
+        public final List<Map<Integer, Double>> pi = new ArrayList<Map<Integer, Double>>();
 
-        public final List<Map<Integer, Double>> g = new ArrayList<>();
+        public final List<Map<Integer, Double>> g = new ArrayList<Map<Integer, Double>>();
 
         public Optimal(int n) {
             for (int i = 0; i < n; i++) {

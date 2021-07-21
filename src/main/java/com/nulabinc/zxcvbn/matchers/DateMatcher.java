@@ -2,7 +2,6 @@ package com.nulabinc.zxcvbn.matchers;
 
 import com.nulabinc.zxcvbn.Scoring;
 import com.nulabinc.zxcvbn.WipeableString;
-
 import java.util.*;
 import java.util.regex.*;
 
@@ -10,7 +9,7 @@ public class DateMatcher extends BaseMatcher {
 
     private static final int DATE_MAX_YEAR = 2050;
     private static final int DATE_MIN_YEAR = 1000;
-    private static final Map<Integer, ArrayList<Integer[]>> DATE_SPLITS = new HashMap<>();
+    private static final Map<Integer, ArrayList<Integer[]>> DATE_SPLITS = new HashMap<Integer, ArrayList<Integer[]>>();
     static {
         DATE_SPLITS.put(4, new ArrayList<Integer[]>(){{ add(new Integer[]{1, 2}); add(new Integer[]{2, 3}); }});
         DATE_SPLITS.put(5, new ArrayList<Integer[]>(){{ add(new Integer[]{1, 3}); add(new Integer[]{2, 3}); }});
@@ -24,7 +23,7 @@ public class DateMatcher extends BaseMatcher {
 
     @Override
     public List<Match> execute(CharSequence password) {
-        List<Match> matches = new ArrayList<>();
+        List<Match> matches = new ArrayList<Match>();
         for (int i = 0; i <= password.length() - 4; i++) {
             for (int j = i + 3; j <= i + 7; j++) {
                 if (j >= password.length()) break;
@@ -33,11 +32,11 @@ public class DateMatcher extends BaseMatcher {
                     token.wipe();
                     continue;
                 }
-                List<Dmy> candidates = new ArrayList<>();
+                List<Dmy> candidates = new ArrayList<Dmy>();
                 for(Integer[] date: DATE_SPLITS.get(token.length())) {
                     int k = date[0];
                     int l = date[1];
-                    List<Integer> ints = new ArrayList<>();
+                    List<Integer> ints = new ArrayList<Integer>();
                     try {
                         ints.add(WipeableString.parseInt(token.subSequence(0, k)));
                         ints.add(WipeableString.parseInt(token.subSequence(k, l)));
@@ -76,7 +75,7 @@ public class DateMatcher extends BaseMatcher {
                     token.wipe();
                     continue;
                 }
-                List<Integer> ints = new ArrayList<>();
+                List<Integer> ints = new ArrayList<Integer>();
                 try {
                     ints.add(WipeableString.parseInt(rxMatch.group(1)));
                     ints.add(WipeableString.parseInt(rxMatch.group(3)));
@@ -94,7 +93,7 @@ public class DateMatcher extends BaseMatcher {
                 matches.add(MatchFactory.createDateMatch(i, j, token, rxMatch.group(2), dmy.year, dmy.month, dmy.day));
             }
         }
-        List<Match> targetMatches = new ArrayList<>();
+        List<Match> targetMatches = new ArrayList<Match>();
         for (Match match: matches) {
             boolean isSubmatch = false;
             for (Match otherMatch: matches) {
@@ -131,7 +130,7 @@ public class DateMatcher extends BaseMatcher {
         if (over31 >= 2 || over12 == 3 || under1 >= 2) {
             return null;
         }
-        Map<Integer, List<Integer>> possibleYearSplits = new HashMap<>();
+        Map<Integer, List<Integer>> possibleYearSplits = new HashMap<Integer, List<Integer>>();
         possibleYearSplits.put(ints.get(2), ints.subList(0, 1 + 1));
         possibleYearSplits.put(ints.get(0), ints.subList(1, 2 + 1));
         for(Map.Entry<Integer, List<Integer>> possibleYearSplitRef: possibleYearSplits.entrySet()) {
@@ -161,7 +160,7 @@ public class DateMatcher extends BaseMatcher {
     private Dm mapIntsToDm(List<Integer> ints) {
         List<Integer> copy = new ArrayList<Integer>(ints);
         Collections.reverse(copy);
-        List<List<Integer>> refs = new ArrayList<>();
+        List<List<Integer>> refs = new ArrayList<List<Integer>>();
         refs.add(ints);
         refs.add(copy);
         for (List<Integer> ref: refs) {

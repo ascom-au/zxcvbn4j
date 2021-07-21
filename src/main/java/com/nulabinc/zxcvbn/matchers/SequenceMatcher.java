@@ -1,7 +1,6 @@
 package com.nulabinc.zxcvbn.matchers;
 
 import com.nulabinc.zxcvbn.WipeableString;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -41,7 +40,7 @@ public class SequenceMatcher extends BaseMatcher {
 
     @Override
     public List<Match> execute(CharSequence password) {
-        List<Match> matches = new ArrayList<>();
+        List<Match> matches = new ArrayList<Match>();
         // Identifies sequences by looking for repeated differences in unicode codepoint.
         // this allows skipping, such as 9753, and also matches some extended unicode sequences
         // such as Greek and Cyrillic alphabets.

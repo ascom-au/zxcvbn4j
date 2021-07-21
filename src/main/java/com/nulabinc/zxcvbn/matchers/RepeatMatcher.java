@@ -4,7 +4,6 @@ import com.nulabinc.zxcvbn.Matching;
 import com.nulabinc.zxcvbn.Scoring;
 import com.nulabinc.zxcvbn.Strength;
 import com.nulabinc.zxcvbn.WipeableString;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.*;
@@ -12,7 +11,7 @@ import java.util.regex.*;
 public class RepeatMatcher extends BaseMatcher {
     @Override
     public List<Match> execute(CharSequence password) {
-        List<Match> matches = new ArrayList<>();
+        List<Match> matches = new ArrayList<Match>();
         Pattern greedy = Pattern.compile("(.+)\\1+");
         Pattern lazy = Pattern.compile("(.+?)\\1+");
         Pattern lazyAnchored = Pattern.compile("^(.+?)\\1+$");

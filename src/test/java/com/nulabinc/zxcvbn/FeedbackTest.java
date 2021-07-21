@@ -1,12 +1,11 @@
 package com.nulabinc.zxcvbn;
 
 import com.nulabinc.zxcvbn.matchers.Match;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import org.junit.*;
 import org.junit.runner.*;
 import org.junit.runners.*;
-
-import java.text.SimpleDateFormat;
-import java.util.*;
 
 @RunWith(Parameterized.class)
 public class FeedbackTest {
@@ -48,7 +47,7 @@ public class FeedbackTest {
         Strength strength = zxcvbn.measure(password);
         Feedback feedback = strength.getFeedback();
 
-        Map<Locale, ResourceBundle> messages = new HashMap<>();
+        Map<Locale, ResourceBundle> messages = new HashMap<Locale, ResourceBundle>();
         ResourceBundle resourceBundle = ResourceBundle.getBundle("com/nulabinc/zxcvbn/messages", Locale.JAPANESE);
         messages.put(Locale.ITALIAN, resourceBundle);
         Feedback replacedFeedback = feedback.replaceResourceBundle(messages);

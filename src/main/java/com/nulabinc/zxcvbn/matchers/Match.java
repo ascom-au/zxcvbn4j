@@ -1,7 +1,6 @@
 package com.nulabinc.zxcvbn.matchers;
 
 import com.nulabinc.zxcvbn.Pattern;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -50,7 +49,7 @@ public class Match {
         this.dictionaryName = builder.dictionaryName;
         this.reversed = builder.reversed;
         this.l33t = builder.l33t;
-        if (builder.sub == null) builder.sub = new HashMap<>();
+        if (builder.sub == null) builder.sub = new HashMap<Character, Character>();
         this.sub = builder.sub;
         this.subDisplay = builder.subDisplay;
         this.sequenceName = builder.sequenceName;
@@ -60,7 +59,7 @@ public class Match {
         this.regexMatch = builder.regexMatch;
         this.baseToken = builder.baseToken;
         this.baseGuesses = builder.baseGuesses;
-        if (builder.baseMatches == null) builder.baseMatches = new ArrayList<>();
+        if (builder.baseMatches == null) builder.baseMatches = new ArrayList<Match>();
         this.baseMatches = builder.baseMatches;
         this.repeatCount = builder.repeatCount;
         this.graph = builder.graph;

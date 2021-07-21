@@ -17,13 +17,13 @@ public class L33tSubDict implements Iterable<Map<Character, Character>> {
     }
 
     private List<Map<Character, Character>> buildSubDicts(final Map<Character, List<Character>> table) {
-        final Set<List<String>> initialSubs = new LinkedHashSet<>();
+        final Set<List<String>> initialSubs = new LinkedHashSet<List<String>>();
         initialSubs.add(new ArrayList<String>());
         final Set<List<String>> subs = helper(table, table.keySet().iterator(), initialSubs);
 
-        List<Map<Character, Character>> subDicts = new ArrayList<>();
+        List<Map<Character, Character>> subDicts = new ArrayList<Map<Character, Character>>();
         for (List<String> sub : subs) {
-            Map<Character, Character> subDict = new HashMap<>();
+            Map<Character, Character> subDict = new HashMap<Character, Character>();
             for (CharSequence ref : sub) {
                 subDict.put(ref.charAt(0), ref.charAt(1));
             }
@@ -38,13 +38,13 @@ public class L33tSubDict implements Iterable<Map<Character, Character>> {
         }
 
         Character key = keysIterator.next();
-        Set<List<String>> nextSubs = new LinkedHashSet<>();
+        Set<List<String>> nextSubs = new LinkedHashSet<List<String>>();
         for (Character l33tChr : table.get(key)) {
             for (List<String> sub : subs) {
                 boolean found = false;
                 for (int i = 0; i < sub.size(); i++) {
                     if (sub.get(i).charAt(0) == l33tChr) {
-                        List<String> subAlternative = new ArrayList<>(sub);
+                        List<String> subAlternative = new ArrayList<String>(sub);
                         subAlternative.remove(i);
                         subAlternative.add(String.valueOf(new char[]{l33tChr, key}));
                         nextSubs.add(sub);
@@ -54,7 +54,7 @@ public class L33tSubDict implements Iterable<Map<Character, Character>> {
                     }
                 }
                 if (!found) {
-                    List<String> subExtension = new ArrayList<>(sub);
+                    List<String> subExtension = new ArrayList<String>(sub);
                     subExtension.add(String.valueOf(new char[]{l33tChr, key}));
                     nextSubs.add(subExtension);
                 }

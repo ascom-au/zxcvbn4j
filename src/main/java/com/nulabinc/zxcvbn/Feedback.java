@@ -2,7 +2,6 @@ package com.nulabinc.zxcvbn;
 
 import com.nulabinc.zxcvbn.guesses.DictionaryGuess;
 import com.nulabinc.zxcvbn.matchers.Match;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -71,7 +70,7 @@ public class Feedback {
     }
 
     public List<String> getSuggestions(Locale locale) {
-        List<String> suggestionTexts = new ArrayList<>(this.suggestions.length);
+        List<String> suggestionTexts = new ArrayList<String>(this.suggestions.length);
         ResourceBundle messages = resolveResourceBundle(locale);
         for (String suggestion : this.suggestions) {
             suggestionTexts.add(l10n(messages, suggestion));
@@ -199,7 +198,7 @@ public class Feedback {
             }
         }
 
-        List<String> suggestions = new ArrayList<>();
+        List<String> suggestions = new ArrayList<String>();
         suggestions.add(EXTRA_SUGGESTIONS_ADD_ANOTHER_WORD);
 
         CharSequence word = match.token;

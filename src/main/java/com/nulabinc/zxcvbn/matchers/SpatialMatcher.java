@@ -1,7 +1,6 @@
 package com.nulabinc.zxcvbn.matchers;
 
 import com.nulabinc.zxcvbn.WipeableString;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -15,7 +14,7 @@ public class SpatialMatcher extends BaseMatcher {
     private final List<Keyboard> keyboards;
 
     public SpatialMatcher(List<Keyboard> keyboards) {
-        this.keyboards = new ArrayList<>(keyboards);
+        this.keyboards = new ArrayList<Keyboard>(keyboards);
     }
 
     public SpatialMatcher() {
@@ -24,7 +23,7 @@ public class SpatialMatcher extends BaseMatcher {
 
     @Override
     public List<Match> execute(CharSequence password) {
-        List<Match> matches = new ArrayList<>();
+        List<Match> matches = new ArrayList<Match>();
         for (Keyboard keyboard : keyboards) {
             extend(matches, spatialMatchHelper(password, keyboard));
         }
@@ -33,7 +32,7 @@ public class SpatialMatcher extends BaseMatcher {
 
 
     private List<Match> spatialMatchHelper(CharSequence password, Keyboard keyboard) {
-        List<Match> matches = new ArrayList<>();
+        List<Match> matches = new ArrayList<Match>();
         int i = 0;
         while (i < password.length() - 1) {
             int j = i + 1;

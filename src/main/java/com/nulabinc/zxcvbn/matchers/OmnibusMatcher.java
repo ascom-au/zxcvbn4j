@@ -1,7 +1,6 @@
 package com.nulabinc.zxcvbn.matchers;
 
 import com.nulabinc.zxcvbn.Matcher;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,14 +11,14 @@ public class OmnibusMatcher extends BaseMatcher {
     private final Map<String, Map<String, Integer>> dictionaries;
 
     public OmnibusMatcher(Map<String, Map<String, Integer>> dictionaries) {
-        if (dictionaries == null) dictionaries = new HashMap<>();
+        if (dictionaries == null) dictionaries = new HashMap<String, Map<String, Integer>>();
         this.dictionaries = dictionaries;
     }
 
     @Override
     public List<Match> execute(CharSequence password) {
-        List<Match> matches = new ArrayList<>();
-        List<Matcher> matchers = new ArrayList<>();
+        List<Match> matches = new ArrayList<Match>();
+        List<Matcher> matchers = new ArrayList<Matcher>();
         matchers.add(new DictionaryMatcher(dictionaries));
         matchers.add(new ReverseDictionaryMatcher(dictionaries));
         matchers.add(new L33tMatcher(dictionaries));

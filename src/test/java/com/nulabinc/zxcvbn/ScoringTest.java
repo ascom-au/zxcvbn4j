@@ -3,15 +3,13 @@ package com.nulabinc.zxcvbn;
 import com.nulabinc.zxcvbn.guesses.*;
 import com.nulabinc.zxcvbn.matchers.Match;
 import com.nulabinc.zxcvbn.matchers.MatchFactory;
+import java.lang.reflect.Method;
+import java.util.*;
+import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-
-import java.lang.reflect.Method;
-import java.util.*;
-
-import static org.junit.Assert.assertEquals;
 
 @RunWith(Enclosed.class)
 public class ScoringTest {
@@ -152,7 +150,7 @@ public class ScoringTest {
 
         @Test
         public void testDictionaryGuesses133t() throws Exception {
-            Map<Character, Character> sub = new HashMap<>();
+            Map<Character, Character> sub = new HashMap<Character, Character>();
             sub.put('@', 'a');
             Match match = new Match.Builder(Pattern.Dictionary, 0, 0, "aaa@@@").sub(sub).l33t(true).rank(32).build();
             String msg = "extra guesses are added for common l33t substitutions";
@@ -161,7 +159,7 @@ public class ScoringTest {
 
         @Test
         public void testDictionaryGuessesMixed() throws Exception {
-            Map<Character, Character> sub = new HashMap<>();
+            Map<Character, Character> sub = new HashMap<Character, Character>();
             sub.put('@', 'a');
             Match match = new Match.Builder(Pattern.Dictionary, 0, 0, "AaA@@@").sub(sub).l33t(true).rank(32).build();
             String msg = "extra guesses are added for both capitalization and common l33t substitutions";

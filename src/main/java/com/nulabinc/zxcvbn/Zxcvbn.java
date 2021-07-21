@@ -1,7 +1,6 @@
 package com.nulabinc.zxcvbn;
 
 import com.nulabinc.zxcvbn.matchers.Match;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -21,7 +20,7 @@ public class Zxcvbn {
         }
         List<String> lowerSanitizedInputs;
         if (sanitizedInputs != null && !sanitizedInputs.isEmpty()) {
-            lowerSanitizedInputs = new ArrayList<>(sanitizedInputs.size());
+            lowerSanitizedInputs = new ArrayList<String>(sanitizedInputs.size());
             for (String sanitizedInput : sanitizedInputs) {
                 lowerSanitizedInputs.add(sanitizedInput.toLowerCase());
             }

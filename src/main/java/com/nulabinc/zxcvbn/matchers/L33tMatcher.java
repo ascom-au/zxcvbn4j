@@ -1,7 +1,6 @@
 package com.nulabinc.zxcvbn.matchers;
 
 import com.nulabinc.zxcvbn.WipeableString;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -18,13 +17,13 @@ public class L33tMatcher extends BaseMatcher {
 
     public L33tMatcher(Map<String, Map<String, Integer>> rankedDictionaries) {
         if (rankedDictionaries == null) {
-            this.rankedDictionaries = new HashMap<>();
+            this.rankedDictionaries = new HashMap<String, Map<String, Integer>>();
         } else {
             this.rankedDictionaries = rankedDictionaries;
         }
     }
 
-    private static final Map<Character, List<Character>> L33T_TABLE = new HashMap<>();
+    private static final Map<Character, List<Character>> L33T_TABLE = new HashMap<Character, List<Character>>();
 
     static {
         L33T_TABLE.put('a', Arrays.asList('4', '@'));
@@ -46,15 +45,15 @@ public class L33tMatcher extends BaseMatcher {
     }
 
     public Map<Character, List<Character>> relevantL33tSubTable(CharSequence password, Map<Character, List<Character>> table) {
-        HashMap<Character, Boolean> passwordChars = new HashMap<>();
+        HashMap<Character, Boolean> passwordChars = new HashMap<Character, Boolean>();
         for (int n = 0; n < password.length(); n++) {
             passwordChars.put(password.charAt(n), true);
         }
-        Map<Character, List<Character>> subTable = new HashMap<>();
+        Map<Character, List<Character>> subTable = new HashMap<Character, List<Character>>();
         for (Map.Entry<Character, List<Character>> l33tRowRef : table.entrySet()) {
             Character letter = l33tRowRef.getKey();
             List<Character> subs = l33tRowRef.getValue();
-            List<Character> relevantSubs = new ArrayList<>();
+            List<Character> relevantSubs = new ArrayList<Character>();
             for (Character sub : subs) {
                 if (passwordChars.containsKey(sub)) {
                     relevantSubs.add(sub);
@@ -69,7 +68,7 @@ public class L33tMatcher extends BaseMatcher {
 
     @Override
     public List<Match> execute(CharSequence password) {
-        List<Match> matches = new ArrayList<>();
+        List<Match> matches = new ArrayList<Match>();
         Map<Character, List<Character>> subTable = relevantL33tSubTable(password);
         L33tSubDict l33tSubs = new L33tSubDict(subTable);
         for (Map<Character, Character> sub : l33tSubs) {
@@ -83,7 +82,7 @@ public class L33tMatcher extends BaseMatcher {
                     lower.wipe();
                     continue;
                 }
-                Map<Character, Character> matchSub = new HashMap<>();
+                Map<Character, Character> matchSub = new HashMap<Character, Character>();
                 for (Map.Entry<Character, Character> subRef : sub.entrySet()) {
                     Character subbedChr = subRef.getKey();
                     Character chr = subRef.getValue();
@@ -91,7 +90,7 @@ public class L33tMatcher extends BaseMatcher {
                         matchSub.put(subbedChr, chr);
                     }
                 }
-                List<String> subDisplays = new ArrayList<>();
+                List<String> subDisplays = new ArrayList<String>();
                 for (Map.Entry<Character, Character> matchSubRef : matchSub.entrySet()) {
                     Character k = matchSubRef.getKey();
                     Character v = matchSubRef.getValue();
@@ -112,7 +111,7 @@ public class L33tMatcher extends BaseMatcher {
                 lower.wipe();
             }
         }
-        List<Match> lst = new ArrayList<>();
+        List<Match> lst = new ArrayList<Match>();
         for (Match match : matches) if (match.tokenLength() > 1) lst.add(match);
         return this.sorted(lst);
     }

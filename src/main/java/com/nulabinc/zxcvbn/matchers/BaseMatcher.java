@@ -2,7 +2,6 @@ package com.nulabinc.zxcvbn.matchers;
 
 import com.nulabinc.zxcvbn.Matcher;
 import com.nulabinc.zxcvbn.WipeableString;
-
 import java.util.*;
 
 public abstract class BaseMatcher implements Matcher {
@@ -23,7 +22,7 @@ public abstract class BaseMatcher implements Matcher {
     }
 
     protected CharSequence translate(CharSequence string, Map<Character, Character> chrMap) {
-        List<Character> characters = new ArrayList<>();
+        List<Character> characters = new ArrayList<Character>();
         for (int n = 0; n < string.length(); n++) {
             char chr = string.charAt(n);
             characters.add(chrMap.containsKey(chr) ? chrMap.get(chr) : chr);

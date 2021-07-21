@@ -2,13 +2,12 @@ package com.nulabinc.zxcvbn.guesses;
 
 import com.nulabinc.zxcvbn.WipeableString;
 import com.nulabinc.zxcvbn.matchers.Match;
-
 import java.util.HashMap;
 import java.util.Map;
 
 public class RegexGuess extends BaseGuess {
 
-    private static final Map<String, Integer> CHAR_CLASS_BASES = new HashMap<>();
+    private static final Map<String, Integer> CHAR_CLASS_BASES = new HashMap<String, Integer>();
     static {
         CHAR_CLASS_BASES.put("alpha_lower", 26);
         CHAR_CLASS_BASES.put("alpha_upper", 26);
