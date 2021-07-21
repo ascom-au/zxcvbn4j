@@ -215,7 +215,7 @@ public class ApproachComparisonTest
             }
             else
             {
-                return (int) score;
+                return (Integer) score;
             }
         }
 

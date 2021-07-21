@@ -7,12 +7,12 @@
         <version>2.14</version>
     </parent>
     
-    <groupId>com.nulab-inc</groupId>
-    <artifactId>zxcvbn</artifactId>
-    <version>1.5.2-6J</version>
+    <groupId>au.com.iwsoftware</groupId>
+    <artifactId>zxcvbn-jdk6</artifactId>
+    <version>1.5.2</version>
     <name>${project.artifactId}-${project.version}</name>
     <packaging>jar</packaging>
-    <description>This is a java port of zxcvbn, which is a JavaScript password strength generator.</description>
+    <description>A fork of the zxcvbn4j project by Yuichi Watanabe at Nulab. This is a java port of zxcvbn, which is a JavaScript password strength generator.</description>
     <url>https://github.com/nulab/zxcvbn4j</url>
     
     <licenses>

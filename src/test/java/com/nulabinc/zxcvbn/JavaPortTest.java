@@ -1,16 +1,14 @@
 package com.nulabinc.zxcvbn;
 
+import static com.nulabinc.zxcvbn.ApproachComparisonTest.initScriptEngine;
+import java.util.Arrays;
+import java.util.Map;
+import javax.script.ScriptEngine;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-
-import javax.script.ScriptEngine;
-import java.util.Arrays;
-import java.util.Map;
-
-import static com.nulabinc.zxcvbn.ApproachComparisonTest.initScriptEngine;
 
 @RunWith(Parameterized.class)
 public class JavaPortTest {
@@ -40,7 +38,7 @@ public class JavaPortTest {
         if (score instanceof Double) {
             jsScore = ((Double) score).intValue();
         } else {
-            jsScore = (int) score;
+            jsScore = (Integer) score;
         }
         int javaScore = zxcvbn.measure(password).getScore();
         Assert.assertEquals("Password score difference for " + password, jsScore, javaScore);
