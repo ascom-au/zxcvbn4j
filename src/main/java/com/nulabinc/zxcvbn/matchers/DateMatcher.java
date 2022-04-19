@@ -1,5 +1,6 @@
 package com.nulabinc.zxcvbn.matchers;
 
+import com.nulabinc.zxcvbn.Context;
 import com.nulabinc.zxcvbn.Scoring;
 import com.nulabinc.zxcvbn.WipeableString;
 import java.util.*;
@@ -20,6 +21,10 @@ public class DateMatcher extends BaseMatcher {
 
     private final Pattern maybe_date_no_separator = Pattern.compile("^\\d{4,8}$");
     private final Pattern maybe_date_with_separator = Pattern.compile("^(\\d{1,4})([\\s/\\\\_.-])(\\d{1,2})\\2(\\d{1,4})$");
+
+    public DateMatcher(final Context context) {
+        super(context);
+    }
 
     @Override
     public List<Match> execute(CharSequence password) {
@@ -42,7 +47,6 @@ public class DateMatcher extends BaseMatcher {
                         ints.add(WipeableString.parseInt(token.subSequence(k, l)));
                         ints.add(WipeableString.parseInt(token.subSequence(l,token.length())));
                     } catch (NumberFormatException e) {
-                        System.out.println(e.getStackTrace());
                         continue;
                     }
                     Dmy dmy = mapIntsToDmy(ints);
@@ -81,7 +85,6 @@ public class DateMatcher extends BaseMatcher {
                     ints.add(WipeableString.parseInt(rxMatch.group(3)));
                     ints.add(WipeableString.parseInt(rxMatch.group(4)));
                 } catch (NumberFormatException e) {
-                    System.out.println(e.getStackTrace());
                     token.wipe();
                     continue;
                 }
